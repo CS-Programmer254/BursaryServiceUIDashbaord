@@ -1,20 +1,13 @@
 function QuickSearch() {
-    return (
-      <div className="bg-white shadow-md p-4 md:p-6 rounded-lg col-span-2 animate-fadeIn">
-        <h2 className="text-lg font-medium">Quick Search</h2>
-        <div className="mt-4 flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4">
-          <input
-            type="text"
-            placeholder="Search by Admission, Phone, ID..."
-            className="border p-2 rounded w-full focus:outline-none focus:ring focus:ring-blue-300 transition"
-          />
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
-            Search
-          </button>
-        </div>
-      </div>
-    );
-  }
-  
-  export default QuickSearch;
-  
+  return (
+    <div className="bg-white shadow-md p-4 md:p-6 rounded-lg col-span-2 animate-fadeIn">
+      <img
+        src="https://media.istockphoto.com/id/684899944/vector/scholarship-infographic-with-8-steps-parts-options.jpg?s=612x612&w=0&k=20&c=H9RySilW1VNNfr8PylRBAHq1h0b4N-lVKeg93qWqzYc="
+        alt="Scholarship Infographic"
+        className="w-full h-48 mx-auto rounded-lg object-cover"
+      />
+    </div>
+  );
+}
+
+export default QuickSearch;

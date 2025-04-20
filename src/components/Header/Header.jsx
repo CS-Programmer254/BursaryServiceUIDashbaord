@@ -1,55 +1,67 @@
-import { HiOutlineBell } from "react-icons/hi";
-import { useState } from "react";
+import React, { useState } from "react";
+import { HiOutlineBell, HiOutlineLogout } from "react-icons/hi";
 
-function Header() {
+const Header = ({ user, onLogout }) => {
   const [showNotifications, setShowNotifications] = useState(false);
-  const lastLogin = "Feb 22, 2025 at 10:45 AM"; // Replace dynamically if needed
 
   return (
-    <div className="bg-white shadow-md border border-gray-300 p-4 lg:p-6">
-      {/* Top Section: Bursary Portal Title */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl lg:text-2xl font-bold text-gray-800">
-          Bursary Portal
-        </h1>
+    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+      <div className="px-6 py-4">
+        <div className="flex justify-between items-center">
+          {/* Left side - Welcome message */}
+          <div>
+            <h1 className="text-xl font-bold text-gray-800">Bursary Portal</h1>
+            <p className="text-sm text-gray-600">
+              Welcome back, <span className="font-medium text-blue-600">{user?.username}</span>
+            </p>
+          </div>
 
-        {/* Right Section: Notifications & Profile */}
-        <div className="flex items-center space-x-4">
-          {/* Notification Icon */}
-          <button
-            className="relative focus:outline-none"
-            onClick={() => setShowNotifications(!showNotifications)}
-          >
-            <HiOutlineBell size={24} className="text-gray-600 cursor-pointer hover:text-blue-600 transition" />
-            <span className="absolute -top-1 -right-1 bg-red-500 w-3 h-3 rounded-full"></span>
-          </button>
+          {/* Right side - Actions */}
+          <div className="flex items-center space-x-4">
+            {/* Notifications */}
+            <div className="relative">
+              <button
+                className="p-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                onClick={() => setShowNotifications(!showNotifications)}
+              >
+                <HiOutlineBell size={20} />
+                <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+              
+              {/* Notifications dropdown */}
+              {showNotifications && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                  <div className="p-4 border-b">
+                    <h3 className="font-medium text-gray-800">Notifications</h3>
+                  </div>
+                  <div className="p-4 text-sm text-gray-600">
+                    No new notifications
+                  </div>
+                </div>
+              )}
+            </div>
 
-          {/* User Profile */}
-          <img
-            src="https://via.placeholder.com/40"
-            alt="User"
-            className="rounded-full w-10 h-10 border border-gray-300 shadow-sm"
-          />
+            {/* User profile */}
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+                {user?.username?.charAt(0)}
+              </div>
+            </div>
+
+            {/* Logout button */}
+            <button
+              onClick={onLogout}
+              className="flex items-center text-sm text-gray-600 hover:text-red-600 transition-colors"
+              title="Logout"
+            >
+              <HiOutlineLogout size={18} className="mr-1" />
+              <span className="hidden md:inline">Logout</span>
+            </button>
+          </div>
         </div>
       </div>
-      
-      {/* Bottom Section: Welcome Message */}
-      <div className="mt-2">
-        <h2 className="text-lg lg:text-xl font-semibold text-gray-700">
-          Welcome Back, <span className="text-blue-600">Stanley</span> 👋
-        </h2>
-        <p className="text-sm text-gray-500">Last login: {lastLogin}</p>
-      </div>
-
-
-      {/* Notification Dropdown */}
-      {showNotifications && (
-        <div className="absolute right-4 top-14 w-64 bg-white shadow-lg border border-gray-300 p-4">
-          <p className="text-sm text-gray-600">No new notifications</p>
-        </div>
-      )}
-    </div>
+    </header>
   );
-}
+};
 
 export default Header;

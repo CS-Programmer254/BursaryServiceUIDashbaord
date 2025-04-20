@@ -7,11 +7,25 @@ function BursaryApplicationsReport({ setFilteredData }) {
 
   useEffect(() => {
     const fetchApplications = async () => {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+
       try {
-        const response = await fetch("https://localhost:7094/api/Bursary/all");
+        let url = "";
+
+        if (user?.role === "ROLE_ADMIN") {
+          url = "https://localhost:7094/api/Bursary/all";
+        } else if (user?.role === "ROLE_STUDENT") {
+          
+          url = `https://localhost:7094/api/Bursary/get-bursary-applications-by-phone/${user.phone}`;
+        } else {
+          throw new Error("Unauthorized role");
+        }
+
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
+
         const data = await response.json();
         setApplications(data);
         setFilteredData(data);
@@ -68,9 +82,12 @@ function BursaryApplicationsReport({ setFilteredData }) {
                 >
                   {app.applicationStatus}
                 </td>
-                <td className="p-2">{new Date(app.applicationDate).toLocaleDateString()}</td>
                 <td className="p-2">
-                  {app.amountAppliedFor.currency} {app.amountAppliedFor.amount.toLocaleString()}
+                  {new Date(app.applicationDate).toLocaleDateString()}
+                </td>
+                <td className="p-2">
+                  {app.amountAppliedFor.currency}{" "}
+                  {app.amountAppliedFor.amount.toLocaleString()}
                 </td>
               </tr>
             ))}
